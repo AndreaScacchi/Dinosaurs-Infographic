@@ -43,7 +43,43 @@ const dinoData = async() => {
         species: 'Human'
     };
 
-    // Use IIFE to get human data from form
+
+    // On button click, prepare and display infographic
+    document.getElementById('btn').addEventListener('click',(event) => {
+        // Use IIFE to get human data from form
+        (function humanData(e) {
+            human.name = document.getElementById('name').value,
+            human.feet = document.getElementById('feet').value,
+            human.inches = document.getElementById('inches').value,
+            human.weight = document.getElementById('weight').value,
+            human.diet = document.getAnimations('diet').value
+        })();
+
+        dinosaurs.forEach((dino) => {
+            dino.heightFact = dino.compareHeight(human);
+            dino.weightFact = dino.compareWeight(human);
+            dino.dietFact = dino.compareDiet(human);
+            dino.where = `The ${dino.species} inhabited in ${dino.where}.`;
+            dinos.when = `The ${dinos.species} inhabited in the ${dino.when}.`
+        });
+
+        const dinoSlice1 = dinosaurs.slice(0, 4);
+        const dinoSlice2 = dinosaurs.slice(4, 8);
+        const dinoHumanSpecies = dinoSlice1.concat(human, dinoSlice2);
+
+        // Add tiles to DOM
+        dinoHumanSpecies.forEach((item) => {
+            generateTiles(item);
+        });
+
+        deleteForm();
+
+        tryAgainButton();
+    });
+
+
+    //Convert human height to inches to allow comparison to dinosaurs height
+
 
 
     // Create Dino Compare Method 1
@@ -60,9 +96,19 @@ const dinoData = async() => {
 
     // Generate Tiles for each Dino in Array
 
-        // Add tiles to DOM
-
     // Remove form from screen
 
 
-// On button click, prepare and display infographic
+// Validate the form data to ensure the data is acceptable and complete.
+
+
+// Move the tile colors from CSS to JS for more control.
+
+
+// Randomize the order of the tiles while keeping the human in the middle.
+
+
+// Create a hover state on the tiles that displays the rest of the species statistics.
+
+
+// Create a "Try again button"
