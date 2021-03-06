@@ -1,5 +1,5 @@
  // Create Dino Constructor
-function DinosConstructor(species, weight, height, diet, where, when, fact, image) {
+function DinosConstructor(species, weight, height, diet, where, when, fact) {
     this.species = species;
     this.weight = weight;
     this.height = height;
@@ -7,8 +7,9 @@ function DinosConstructor(species, weight, height, diet, where, when, fact, imag
     this.where = where;
     this.when = when;
     this.fact = fact;
-    this.image = image;
+    this.image = encodeURI('images/' + species.toLowerCase() + '.png');
 }
+
 
 // Get dinosaurs data from JSON
 const dinoData = async() => {
@@ -16,6 +17,7 @@ const dinoData = async() => {
     const data = await response.json();
     return data.Dinos;
 }
+
 
 // Create Dino Objects
 const dinosaurs = [];
@@ -44,13 +46,27 @@ const human = {
 };
 
 
+// User Input
+let yourName = document.getElementById('name');
+let meterOrFeet = document.getElementById('meterOrFeet');
+let cmOrInches = document.getElementById('cmOrInches');
+let weight = document.getElementById('weight');
+
+
 // On button click, prepare and display infographic
 document.getElementById('btn').addEventListener('click',(event) => {
+
+    // Validate the form data to ensure the data is acceptable and complete
+    if(yourName.value == "" || meterOrFeet.value == "" || cmOrInches.value =="" || weight.value =="") {
+        alert('Please fill out all the form!');
+        return false;
+    }
+
     // Use IIFE to get human data from form
     (function humanData(e) {
         human.name = document.getElementById('name').value,
-        human.feet = document.getElementById('feet').value,
-        human.inches = document.getElementById('inches').value,
+        human.feet = document.getElementById('meterOrFeet').value,
+        human.inches = document.getElementById('cmOrInches').value,
         human.weight = document.getElementById('weight').value,
         human.diet = document.getAnimations('diet').value
     })();
@@ -59,7 +75,8 @@ document.getElementById('btn').addEventListener('click',(event) => {
         dino.heightFact = dino.compareHeight(human);
         dino.weightFact = dino.compareWeight(human);
         dino.dietFact = dino.compareDiet(human);
-        dino.where = `The ${dino.species} inhabited in ${dino.where}.`;
+        /*dino.where = `The ${dino.species} inhabited in ${dino.where}.`;*/
+        dino.where = dino.compareLocation(human);
         dino.when = `The ${dino.species} inhabited in the ${dino.when}.`
     });
 
@@ -93,7 +110,6 @@ DinosConstructor.prototype.compareHeight = function() {
 };
 
 
-
 // Create Dino Compare Method 2
 DinosConstructor.prototype.compareWeight = function() {
     const humanWeight = human.weight;
@@ -109,7 +125,6 @@ DinosConstructor.prototype.compareWeight = function() {
 };
 
 
-
 // Create Dino Compare Method 3
 DinosConstructor.prototype.compareDiet = function() {
     const humanDiet = human.diet;
@@ -120,7 +135,20 @@ DinosConstructor.prototype.compareDiet = function() {
     } else {
         return `Contrary to you, ${this.species} was a ${this.diet}.!`
     }
-}
+};
+
+
+// Create Dino Compare Method 4
+DinosConstructor.prototype.compareLocation = function() {
+    const humanLocation = human.where;
+    const dinosaurLocation = this.where;
+
+    if(humanLocation == dinosaurLocation) {
+        return `${this.species} lived in the same place where you live, or rather ${this.where}.!`
+    } else {
+        return `Unlike you, ${this.species} lived in ${this.where}.!`
+    }
+};
 
 
 // Generate Tiles for each Dino in Array
@@ -141,7 +169,14 @@ const generateTiles = function(dino) {
     }
     tiles.innerHTML += `<img src= ${dino.image}>`;
     dinographic.appendChild(tiles);
+
+    //Move the tile colors from CSS to JS for more control.
+    tiles.style.background = 'linear-gradient(0deg,rgb(0, 119, 255) 0%, rgb(14, 13, 13) 100%)';
 ;}
+
+
+// Change the media query
+
 
 
 // Randomize the order of the tiles while keeping the human in the middle.
@@ -153,15 +188,20 @@ const randomFacts = function(item) {
 
 
 // Remove form from screen
-
-
-// Validate the form data to ensure the data is acceptable and complete.
-
-
-// Move the tile colors from CSS to JS for more control.
-
-
-// Create a hover state on the tiles that displays the rest of the species statistics.
+function deleteForm() {
+    const form = document.getElementById('dino-compare');
+    form.style.display = 'none';
+};
 
 
 // Create a "Try again button"
+const tryAgainButton = function() {
+    const button = document.createElement('button');
+    button.innerHTML = `Try Again!`;
+    dinographic.appendChild(button);
+    document.querySelector('button').addEventListener('click', (event) => {
+        window.setTimeout(() => {
+            window.location.reload();
+        }, 100);
+    })
+}
