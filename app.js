@@ -54,8 +54,15 @@ let cmOrInches = document.getElementById('cmOrInches');
 let weight = document.getElementById('weight');
 
 
+
 // On button click, prepare and display infographic
 document.getElementById('btn').addEventListener('click',(event) => {
+
+    const letters = /^[A-Za-z]+$/;
+    if(!yourName.value.match(letters)) {
+        alert('Please insert a name!');
+        return false;
+    }
 
     // Validate the form data to ensure the data is acceptable and complete
     if(yourName.value == "" || meterOrFeet.value == "" || cmOrInches.value == "" || weight.value == "") {
@@ -202,11 +209,3 @@ const tryAgainButton = function() {
         }, 100);
     })
 }
-
-
-
-
-
-
-
-
