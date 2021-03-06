@@ -39,6 +39,7 @@ dinoData().then(data => {
     });
 }); 
 
+
 // Create Human Object
 const human = {
     image:'images/human.png',
@@ -57,7 +58,7 @@ let weight = document.getElementById('weight');
 document.getElementById('btn').addEventListener('click',(event) => {
 
     // Validate the form data to ensure the data is acceptable and complete
-    if(yourName.value == "" || meterOrFeet.value == "" || cmOrInches.value =="" || weight.value =="") {
+    if(yourName.value == "" || meterOrFeet.value == "" || cmOrInches.value == "" || weight.value == "") {
         alert('Please fill out all the form!');
         return false;
     }
@@ -171,12 +172,8 @@ const generateTiles = function(dino) {
     dinographic.appendChild(tiles);
 
     //Move the tile colors from CSS to JS for more control.
-    tiles.style.background = 'linear-gradient(0deg,rgb(0, 119, 255) 0%, rgb(14, 13, 13) 100%)';
+    //tiles.style.background = 'linear-gradient(0deg,rgb(0, 119, 255) 0%, rgb(14, 13, 13) 100%)';
 ;}
-
-
-// Change the media query
-
 
 
 // Randomize the order of the tiles while keeping the human in the middle.
@@ -205,3 +202,11 @@ const tryAgainButton = function() {
         }, 100);
     })
 }
+
+
+
+
+
+
+
+
