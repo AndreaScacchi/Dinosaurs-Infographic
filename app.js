@@ -19,8 +19,8 @@ const dinoData = async() => {
 }
 
 
-// Create Dino Objects
-const dinosaurs = [];
+// Create Dino Objects 1° method
+/*const dinosaurs = [];
 
 dinoData().then(data => {
     const dinos = data;
@@ -37,7 +37,23 @@ dinoData().then(data => {
         );
         dinosaurs.push(dinosObject);
     });
-}); 
+}); */
+
+
+// Create Dino Objects 2° method
+let dinosaurs; 
+dinoData().then(data => {
+    dinosaurs = data.map((dino) => new DinosConstructor(
+        dino.species,
+        dino.weight,
+        dino.height,
+        dino.diet,
+        dino.where,
+        dino.when,
+        dino.fact,
+        dino.image
+    ));
+});
 
 
 // Create Human Object
@@ -73,7 +89,7 @@ document.getElementById('btn').addEventListener('click',(event) => {
     // Use IIFE to get human data from form
     (function humanData(e) {
         human.name = document.getElementById('name').value,
-        human.feet = document.getElementById('meterOrFeet').value,
+        human.height = document.getElementById('meterOrFeet').value,
         human.inches = document.getElementById('cmOrInches').value,
         human.weight = document.getElementById('weight').value,
         human.diet = document.getAnimations('diet').value
@@ -186,7 +202,7 @@ const generateTiles = function(dino) {
 // Randomize the order of the tiles while keeping the human in the middle.
 const randomFacts = function(item) {
     const facts = ['fact', 'heightFact', 'weightFact', 'dietFact', 'where', 'when'];
-    const randomFact = facts[Math.floor(Math.random() * facts.length)];
+    const randomFact = facts[Math.floor(Math.random() * (facts.length - 1))];
     return item[randomFact];
 };
 
